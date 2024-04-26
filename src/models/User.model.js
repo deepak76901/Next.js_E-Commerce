@@ -1,0 +1,32 @@
+import { Schema, SchemaType, model } from "mongoose";
+
+const userSchema = new Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  profilePicture : {
+    type:String
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+  addresses: {
+    type: [SchemaType.Mixed],
+  }  
+});
+
+
+
+export const User = model("User", userSchema);
