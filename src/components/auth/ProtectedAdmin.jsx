@@ -1,21 +1,21 @@
-"use client"
-import React from 'react'
-import { selectLoggedInUser } from '@/Redux/slices/authSlice'
-import {useSelector} from "react-redux"
+// "use client"
+// import React from 'react'
+// import { selectLoggedInUser } from '@/Redux/slices/authSlice'
+// import {useSelector} from "react-redux"
 
 
-function ProtectedAdmin({children}) {
-    const user = useSelector(selectLoggedInUser)
+// function ProtectedAdmin({children}) {
+//     const user = useSelector(selectLoggedInUser)
 
-    if(!user){
-        return <Navigate to="/login" replace={true} ></Navigate>
-    }
+//     if(!user){
+//         return <Navigate to="/login" replace={true} ></Navigate>
+//     }
 
-    if(user && !user.isAdmin){
-        return <Navigate to="/" replace={true} ></Navigate>
-    }
+//     if(user && !user.isAdmin){
+//         return <Navigate to="/" replace={true} ></Navigate>
+//     }
 
-  return children
-}
+//   return children
+// }
 
-export default ProtectedAdmin
+// export default ProtectedAdmin

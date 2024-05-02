@@ -1,21 +1,21 @@
-"use client"
-import {useDispatch, useSelector} from "react-redux"
-import { useEffect } from "react";
-import { logOutAsync, selectLoggedInUser} from "@/Redux/slices/authSlice";
+// "use client"
+// import {useDispatch, useSelector} from "react-redux"
+// import { useEffect } from "react";
+// import { logOutAsync, selectLoggedInUser} from "@/Redux/slices/authSlice";
 
-function LogOut() {
-    const dispatch = useDispatch()
+// function LogOut() {
+//     const dispatch = useDispatch()
 
-    const user = useSelector(selectLoggedInUser)
+//     const user = useSelector(selectLoggedInUser)
 
-    useEffect(() => {
-        dispatch(logOutAsync())
-    })
-    return ( 
-        <>
-            {!user && <Navigate to="/login" replace={true} ></Navigate>}
-        </>
-     );
-}
+//     useEffect(() => {
+//         dispatch(logOutAsync())
+//     })
+//     return ( 
+//         <>
+//             {!user && <Navigate to="/login" replace={true} ></Navigate>}
+//         </>
+//      );
+// }
 
-export default LogOut;
+// export default LogOut;

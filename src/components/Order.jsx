@@ -1,15 +1,15 @@
-"use client"
-import {  useDispatch } from "react-redux";
-import {} from "@/Redux/slices/OrderSlice";
+// "use client"
+// import {  useDispatch } from "react-redux";
+// import {} from "@/Redux/slices/OrderSlice";
 
-export default function Order() {
-  const dispatch = useDispatch();
+// export default function Order() {
+//   const dispatch = useDispatch();
 
-  return (
-    <div>
-      <div>
+//   return (
+//     <div>
+//       <div>
        
-      </div>
-    </div>
-  );
-}
+//       </div>
+//     </div>
+//   );
+// }
