@@ -1,17 +1,11 @@
-export const fetchAllProducts = async () => {
-  const response = await fetch("/products/getAllProducts");
-  const data = await response.json();
-  return data;
-};
-
 export const fetchProductById = async (id) => {
-  const response = await fetch("/products/" + id);
+  const response = await fetch("/api/products/productById/" + id);
   const data = await response.json();
   return data;
 };
 
 export const createProduct = async (product) => {
-  const response = await fetch("/products/create", {
+  const response = await fetch("/api/products/create", {
     method: "POST",
     body: JSON.stringify(product),
     headers: { "Content-type": "application/json" },
@@ -21,7 +15,7 @@ export const createProduct = async (product) => {
 };
 
 export const updateProduct = async ({id,product}) => {
-  const response = await fetch("/products/update/"+id, {
+  const response = await fetch("/api/products/update/"+id, {
     method: "PATCH",
     body: JSON.stringify(product),
     headers: { "Content-type": "application/json" },
@@ -53,25 +47,25 @@ export const fetchProductsByFilter = async (filter, sort, pagination) => {
   for (let key in pagination) {
     queryString += `${key}=${pagination[key]}&`;
   }
-  const response = await fetch("/products/getAllProducts?" + queryString);
+  const response = await fetch("/api/products/getAllProducts?" + queryString);
   const data = await response.json();
   const totalItems = await response.headers.get("X-Total-Count");
   return { products: data, totalItems: +totalItems };
 };
 
 export const fetchCategories = async () => {
-  const response = await fetch("/categories");
-  const data = await response.json();
-  return data;
+  const response = await fetch("/api/categories");
+  const {categories} = await response.json();
+  return categories;
 };
 export const fetchBrands = async () => {
-  const response = await fetch("/brands");
-  const data = await response.json();
-  return data;
+  const response = await fetch("/api/brands");
+  const {brands} = await response.json();
+  return brands;
 };
 
 export const fetchSuggestions = async (category) => {
-  const response = await fetch(`/products/suggestion/${category}`,)
+  const response = await fetch(`/api/products/suggestion/${category}`,)
   if(response.ok){
     const data = await response.json()
     return data;

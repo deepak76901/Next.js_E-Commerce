@@ -1,13 +1,14 @@
-import { Schema, SchemaType, model } from "mongoose";
+import mongoose from "mongoose";
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
     unique: true,
   },
-  profilePicture : {
-    type:String
+  profilePicture: {
+    type: String,
+    default:"https://www.pikpng.com/pngl/m/80-805068_my-profile-icon-blank-profile-picture-circle-clipart.png"
   },
   email: {
     type: String,
@@ -23,10 +24,9 @@ const userSchema = new Schema({
     default: false,
   },
   addresses: {
-    type: [SchemaType.Mixed],
-  }  
+    type: [mongoose.SchemaTypes.Mixed],
+  },
 });
 
+export const User =mongoose.models.User || mongoose.model("User", userSchema);
 
-
-export const User = model("User", userSchema);

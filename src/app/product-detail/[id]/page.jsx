@@ -5,11 +5,11 @@ import ProductDetails from '@/components/products/ProductDetails';
 import { useDispatch } from 'react-redux';
 import { fetchProductByIdAsync } from '@/Redux/slices/ProductSlice';
 
-export default function page({id}) {
+export default function page() {
     
   return (
     <div>
-      {/* <ProductDetails id={id} /> */}
+      <ProductDetails />
     </div>
   )
 }

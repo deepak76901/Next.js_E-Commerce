@@ -1,4 +1,4 @@
-import { Schema, SchemaType, SchemaTypes, model } from "mongoose";
+import  mongoose,{ Schema, SchemaType, SchemaTypes, model } from "mongoose";
 
 const orderSchema = new Schema(
   {
@@ -19,4 +19,4 @@ const orderSchema = new Schema(
   }
 );
 
-export const Orders = model("Orders", orderSchema);
+export const Orders = mongoose.models.Orders || model("Orders", orderSchema);

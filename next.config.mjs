@@ -2,7 +2,7 @@
 const nextConfig = {
     //configuring image
     images:{
-        domains:["rukminim2.flixcart.com","cdn.dummyjson.com"]
+        domains:["rukminim2.flixcart.com","cdn.dummyjson.com","1000logos.net","logos-world.net","www.pikpng.com"]
     }
 };
 

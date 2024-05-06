@@ -18,17 +18,11 @@ const initialState = {
   status: "idle",
   totalItems: 0,
   selectedProduct: null,
-  createdProduct:null,
-  suggestions:[]
+  createdProduct: null,
+  suggestions: [],
 };
 
-export const fetchAllProductsAsync = createAsyncThunk(
-  "product/fetchAllProducts",
-  async () => {
-    const response = await fetchAllProducts();
-    return response;
-  }
-);
+
 
 export const fetchProductByIdAsync = createAsyncThunk(
   "product/fetchProductById",
@@ -76,10 +70,13 @@ export const updateProductAsync = createAsyncThunk(
   }
 );
 
-export const fetchSuggestionAsync = createAsyncThunk("/product/suggestions",async (category) => {
-  const response = await fetchSuggestions(category);
-  return response;
-})
+export const fetchSuggestionAsync = createAsyncThunk(
+  "/product/suggestions",
+  async (category) => {
+    const response = await fetchSuggestions(category);
+    return response;
+  }
+);
 
 export const productSlice = createSlice({
   name: "product",
@@ -96,13 +93,6 @@ export const productSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllProductsAsync.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchAllProductsAsync.fulfilled, (state, action) => {
-        state.status = "idle";
-        state.products = action.payload;
-      })
       .addCase(fetchProductsByFilterAsync.pending, (state) => {
         state.status = "loading";
       })
@@ -156,8 +146,7 @@ export const productSlice = createSlice({
       .addCase(fetchSuggestionAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.suggestions = action.payload;
-      })
-
+      });
   },
 });
 
@@ -167,8 +156,8 @@ export const selectAllProducts = (state) => state.product.products;
 export const selectBrands = (state) => state.product.brands;
 export const selectCategories = (state) => state.product.categories;
 export const selectProductById = (state) => state.product.selectedProduct;
-export const selectCreatedProduct = state => state.product.createdProduct;
-export const selectSuggestions = state => state.product.suggestions
+export const selectCreatedProduct = (state) => state.product.createdProduct;
+export const selectSuggestions = (state) => state.product.suggestions;
 
 export const selectTotalItems = (state) => state.product.totalItems;
 

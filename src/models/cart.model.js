@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose,{ Schema, model } from "mongoose";
 
 const cartSchema = new Schema({
   quantity: { type: Number, required: true, default: 0 },
@@ -8,4 +8,4 @@ const cartSchema = new Schema({
 
 
 
-export const Cart = model("Cart", cartSchema);
+export const Cart =mongoose.models.Cart || model("Cart", cartSchema);
