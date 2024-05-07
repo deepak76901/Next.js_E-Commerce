@@ -106,7 +106,7 @@ export default function ProductList() {
   useEffect(() => {
     dispatch(fetchBrandsAsync());
     dispatch(fetchCategoryAsync());
-  }, []);
+  }, [dispatch]);
 
   const { theme } = useSelector((state) => state.theme);
 

@@ -34,7 +34,7 @@ function Navbar({ children }) {
 
   useEffect(() => {
     dispatch(fetchItemsByUserIdAsync(user._id))
-  },[items])
+  },[dispatch,items,user._id])
   return (
     <Disclosure as="nav" className="bg-gray-200 sticky top-0 z-30">
       {({ open }) => (

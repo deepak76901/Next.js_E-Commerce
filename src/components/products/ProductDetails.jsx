@@ -52,7 +52,7 @@ export default function ProductDetails() {
 
   useEffect(() => {
     dispatch(fetchProductByIdAsync(params.id));
-  }, [ params.id]);
+  }, [ dispatch,params.id]);
 
   const [index, setIndex] = useState(0);
 
