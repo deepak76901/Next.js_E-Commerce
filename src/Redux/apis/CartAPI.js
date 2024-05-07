@@ -1,5 +1,5 @@
 export const addToCart = async (item) => {
-  const response = await fetch("/cart/addToCart", {
+  const response = await fetch("/api/cart/addToCart", {
     method: "POST",
     headers: { "Content-type": "application/json" },
     body: JSON.stringify(item),
@@ -9,9 +9,8 @@ export const addToCart = async (item) => {
 };
 
 export const fetchItemsByUserId = async (userId) => {
-  const response = await fetch("/cart/" + userId);
+  const response = await fetch("/api/cart/userCart?user=" + userId);
   const data = await response.json();
-  console.log(data)
   return data;
 };
 

@@ -1,16 +1,17 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
-import { StarIcon } from "@heroicons/react/20/solid";
-import { RadioGroup } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProductByIdAsync, selectProductById } from "@/Redux/slices/ProductSlice";
+import {
+  fetchProductByIdAsync,
+  selectProductById,
+} from "@/Redux/slices/ProductSlice";
 import { addToCartAsync, selectItems } from "@/Redux/slices/CartSlice";
 import { discountedPrice } from "@/utils/constants";
 import { selectLoggedInUser } from "@/Redux/slices/authSlice";
 import { selectUserInfo } from "@/Redux/slices/userSlice";
 // import Suggestions from "./Suggestions";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { ChevronRight, ChevronLeft, Star, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 
@@ -24,39 +25,44 @@ export default function ProductDetails() {
   const dispatch = useDispatch();
   const params = useParams();
   // Remember this destructuring process
-//   const { _id } = useSelector(selectLoggedInUser);
+  const { _id } = useSelector(selectLoggedInUser);
   const handleCart = (e) => {
     e.preventDefault();
 
-    // if (items.length > 0) {
-    //   if (items.findIndex((item) => item.product.id === product.id) < 0) {
-    //     const newItem = {
-    //       quantity: 1,
-    //       user: _id,
-    //       product: product.id,
-    //     };
-    //     dispatch(addToCartAsync(newItem));
-    //   } else {
-    //     alert("Item Already Exist");
-    //   }
-    // } else {
-    //   const newItem = {
-    //     quantity: 1,
-    //     user: _id,
-    //     product: product.id,
-    //   };
-    //   dispatch(addToCartAsync(newItem));
-    // }
+    if (items.length > 0) {
+      if (items.findIndex((item) => item.product.id === product.id) < 0) {
+        const newItem = {
+          quantity: 1,
+          user: _id,
+          product: product._id,
+        };
+        dispatch(addToCartAsync(newItem));
+      } else {
+        alert("Item Already Exist");
+      }
+    } else {
+      const newItem = {
+        quantity: 1,
+        user: _id,
+        product: product._id,
+      };
+      dispatch(addToCartAsync(newItem));
+    }
   };
 
   useEffect(() => {
     dispatch(fetchProductByIdAsync(params.id));
-  }, [dispatch, params.id]);
+  }, [ params.id]);
 
   const [index, setIndex] = useState(0);
 
   return (
     <div className="bg-white">
+      {!product && (
+        <div className="min-h-screen flex justify-center items-center">
+          <Loader2 size={50} className="animate-spin text-indigo-600"/>
+        </div>
+      )}
       {product && (
         <div>
           <div className="pt-4  flex flex-col md:flex-row w-full">
@@ -65,15 +71,19 @@ export default function ProductDetails() {
               <div className="relative">
                 <button
                   className="absolute top-2/4 left-0 bg-gray-200/70 py-1 px-1 text-xl"
-                  onClick={() => {index>0 && setIndex(index - 1)}}
+                  onClick={() => {
+                    index > 0 && setIndex(index - 1);
+                  }}
                 >
-                  <FaAngleLeft/>
+                  <ChevronLeft />
                 </button>
                 <button
                   className="absolute top-2/4 right-0 bg-gray-200/70 py-1 px-1 text-xl"
-                  onClick={() => {index<3 && setIndex(index + 1)}}
+                  onClick={() => {
+                    index < 3 && setIndex(index + 1);
+                  }}
                 >
-                  <FaAngleRight/>
+                  <ChevronRight />
                 </button>
                 <Image
                   src={product.images[index]}
@@ -109,9 +119,8 @@ export default function ProductDetails() {
                 {/* Reviews */}
                 <div className="flex items-center mt-2 bg-[#4d8c1d] text-white h-7 w-16 rounded-md px-1">
                   <span>{product.rating}</span>
-                  <svg className="h-4">
-                    <StarIcon />
-                  </svg>
+
+                  <Star size={17} strokeWidth={3} className="ml-1" />
                 </div>
               </div>
 
@@ -158,9 +167,7 @@ export default function ProductDetails() {
               </div>
             </div>
           </div>
-          <div>
-            {/* <Suggestions category={product.category} /> */}
-          </div>
+          <div>{/* <Suggestions category={product.category} /> */}</div>
         </div>
       )}
     </div>

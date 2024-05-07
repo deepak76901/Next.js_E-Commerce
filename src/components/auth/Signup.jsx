@@ -66,7 +66,7 @@ export default function Signup() {
                     required: "username is required",
                   })}
                   type="string"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 text-xs sm:text-sm sm:leading-6 px-3"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 text-xs sm:text-sm sm:leading-6 px-3"
                 />
                 {errors.username && (
                   <p className="text-red-500">{errors.username.message}</p>
@@ -91,7 +91,7 @@ export default function Signup() {
                     },
                   })}
                   type="email"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600  text-xs  sm:text-sm sm:leading-6 px-3"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 text-xs  sm:text-sm sm:leading-6 px-3"
                 />
                 {errors.email && (
                   <p className="text-red-500">{errors.email.message}</p>
@@ -123,7 +123,7 @@ export default function Signup() {
                     },
                   })}
                   type="password"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600  text-xs  sm:text-sm sm:leading-6 px-3"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 text-xs  sm:text-sm sm:leading-6 px-3"
                 />
                 {errors.password && (
                   <p className="text-red-500">{errors.password.message}</p>
@@ -144,7 +144,7 @@ export default function Signup() {
                       value === formValues.password || "password doesn't match",
                   })}
                   type="password"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600  text-xs  sm:text-sm sm:leading-6 px-3"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 text-xs  sm:text-sm sm:leading-6 px-3"
                 />
                 {errors.confirmPassword && (
                   <p className="text-red-500">

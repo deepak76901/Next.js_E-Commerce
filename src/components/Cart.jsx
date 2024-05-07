@@ -42,9 +42,9 @@ function Cart() {
           <div className="flow-root">
             <ul role="list" className="-my-6 divide-y divide-gray-200 px-7">
               {items.map((item) => (
-                <li key={item.id} className="flex py-6">
+                <li key={item._id} className="flex py-6">
                   <Link
-                    href={`/product-detail/${item.product.id}`}
+                    href={`/product-detail/${item.product._id}`}
                     className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
                   >
                     <Image
@@ -60,7 +60,7 @@ function Cart() {
                     <div>
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <h3>
-                          <Link href={`/product-detail/${item.product.id}`}>
+                          <Link href={`/product-detail/${item.product._id}`}>
                             {item.product.title}
                           </Link>
                         </h3>

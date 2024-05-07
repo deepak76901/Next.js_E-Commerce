@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Children, useState } from "react";
+import React, { Children, useEffect, useState } from "react";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
@@ -9,7 +9,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { selectItems } from "@/Redux/slices/CartSlice";
+import { fetchItemsByUserIdAsync, selectItems } from "@/Redux/slices/CartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLoggedInUser } from "@/Redux/slices/authSlice";
 import { BsSearch } from "react-icons/bs";
@@ -30,7 +30,11 @@ function Navbar({ children }) {
   const user = useSelector(selectLoggedInUser);
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const dispatch = useDispatch()
 
+  useEffect(() => {
+    dispatch(fetchItemsByUserIdAsync(user._id))
+  },[items])
   return (
     <Disclosure as="nav" className="bg-gray-200 sticky top-0 z-30">
       {({ open }) => (
@@ -91,7 +95,7 @@ function Navbar({ children }) {
                   onChange={(e) => {
                     setSearchQuery(e.target.value);
                   }}
-                  className="ml-5 pl-2 w-80 h-8 my-auto rounded-md text-sm hidden md:block "
+                  className="ml-5 pl-2 w-96 h-8 my-auto rounded-md text-sm hidden md:block"
                   placeholder="Search for Products,Brands and More"
                   color="blue"
                 />
