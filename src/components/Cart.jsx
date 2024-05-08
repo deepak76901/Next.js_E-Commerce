@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
 import React from "react";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 // import { Dialog, Transition } from "@headlessui/react";
 // import { XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
@@ -9,20 +9,29 @@ import {
   selectItems,
   updateCartAsync,
   deleteItemFromCartAsync,
+  resetCartAsync,
 } from "@/Redux/slices/CartSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { discountedPrice } from "@/utils/constants";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+import { createOrderAsync } from "@/Redux/slices/OrderSlice";
+import { selectLoggedInUser } from "@/Redux/slices/authSlice";
 
-function Cart() {
+
+function Cart({selectedAddress,paymentMethod}) {
   const [open, setOpen] = useState(true);
   const items = useSelector(selectItems);
+  const user = useSelector(selectLoggedInUser)
+  const pathname = usePathname();
+  const dispatch = useDispatch();
+  const router = useRouter();
+
   const totalAmount = items.reduce(
     (amount, item) => discountedPrice(item.product) * item.quantity + amount,
     0
   );
   const totalItems = items.reduce((total, item) => item.quantity + total, 0);
-  const dispatch = useDispatch();
 
   const handleQuantity = (e, item) => {
     dispatch(updateCartAsync({ id: item.id, quantity: +e.target.value }));
@@ -31,11 +40,29 @@ function Cart() {
   const handleRemove = (e, id) => {
     dispatch(deleteItemFromCartAsync(id));
   };
+  const handleOrder = () => {
+    if (selectedAddress && paymentMethod) {
+      const order = {
+        userId: user._id,
+        items,
+        totalItems,
+        totalAmount,
+        selectedAddress,
+        paymentMethod,
+        status: "pending",
+      };
+      dispatch(createOrderAsync(order));
+      // router.push("/order/success")
+      // dispatch(resetCartAsync())
+    } else {
+      alert("Please enter Address and Payment method");
+    }
+  };
 
   return (
     <>
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div className="mt-8 p-4 bg-white ">
+        <div className="mt-6 p-4 bg-white ">
           <h2 className="text-3xl pt-3 pb-5 pl-7 font-semibold bg-white">
             Cart Items
           </h2>
@@ -117,13 +144,22 @@ function Cart() {
             <p className="mt-0.5 text-sm text-gray-500">
               Shipping and taxes calculated at checkout.
             </p>
-            <div className="mt-6">
-              <Link
-                href="/checkout"
-                className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-              >
-                Checkout
-              </Link>
+            <div className="mt-6 mx-auto">
+              {pathname === "/cart" ? (
+                <Link
+                  href="/checkout"
+                  className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                >
+                  Check Out
+                </Link>
+              ) : (
+                <button
+                  onClick={handleOrder}
+                  className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                >
+                  Order Now
+                </button>
+              )}
             </div>
             <div className="mt-6 flex justify-center text-center text-sm text-gray-500 gap-2">
               <p>or</p>

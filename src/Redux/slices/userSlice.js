@@ -33,7 +33,6 @@ export const updateUserAsync = createAsyncThunk(
   "/users/updateUser",
   async (update) => {
     const response = await updateUser(update);
-    console.log(response);
     return response;
   }
 );

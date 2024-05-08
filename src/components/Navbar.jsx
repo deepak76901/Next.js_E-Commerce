@@ -34,7 +34,7 @@ function Navbar({ children }) {
 
   useEffect(() => {
     dispatch(fetchItemsByUserIdAsync(user._id))
-  },[dispatch,items,user._id])
+  },[dispatch,user._id])
   return (
     <Disclosure as="nav" className="bg-gray-200 sticky top-0 z-30">
       {({ open }) => (
@@ -124,7 +124,7 @@ function Navbar({ children }) {
                 <Link href="/cart">
                   <button
                     type="button"
-                    className="relative rounded-full  p-1 text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    className="relative rounded-full  p-1 text-gray-700 hover:text-gray-900"
                   >
                     <span className="sr-only">View notifications</span>
                     <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />

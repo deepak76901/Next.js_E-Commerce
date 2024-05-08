@@ -40,6 +40,5 @@ export const resetCart = async (userId) => {
   for (let item of items) {
     await deleteItemFromCart(item.id);
   }
-  console.log(items)
   return { status: "success" };
 };
