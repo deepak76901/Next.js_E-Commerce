@@ -53,7 +53,7 @@ function Cart({selectedAddress,paymentMethod}) {
       };
       dispatch(createOrderAsync(order));
       // router.push("/order/success")
-      // dispatch(resetCartAsync())
+      dispatch(resetCartAsync(user._id))
     } else {
       alert("Please enter Address and Payment method");
     }
@@ -118,7 +118,7 @@ function Cart({selectedAddress,paymentMethod}) {
 
                       <div className="flex">
                         <button
-                          onClick={(e) => handleRemove(e, item.id)}
+                          onClick={(e) => handleRemove(e, item._id)}
                           type="button"
                           className="font-medium text-indigo-600 hover:text-indigo-500"
                         >

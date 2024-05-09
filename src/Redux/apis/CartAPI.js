@@ -25,7 +25,7 @@ export const updateCart = async (update) => {
 };
 
 export const deleteItemFromCart = async (itemId) => {
-  const response = await fetch("/cart/deleteItem/" + itemId, {
+  const response = await fetch("/api/cart/deleteItem/" + itemId, {
     method: "DELETE",
     headers: { "Content-type": "application/json" },
   });
@@ -38,7 +38,7 @@ export const resetCart = async (userId) => {
   const items = response;
   console.log(items)
   for (let item of items) {
-    await deleteItemFromCart(item.id);
+    await deleteItemFromCart(item._id);
   }
   return { status: "success" };
 };
