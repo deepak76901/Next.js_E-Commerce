@@ -9,8 +9,8 @@ export async function POST(request) {
 
     const newOrder = new Orders(order);
     const data = await newOrder.save();
-
-    return Response.json(newOrder);
+   
+    return Response.json(data);
   } catch (error) {
     return Response.json({
       success: false,

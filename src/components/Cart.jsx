@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
 // import { Dialog, Transition } from "@headlessui/react";
 // import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -15,14 +15,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { discountedPrice } from "@/utils/constants";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { createOrderAsync } from "@/Redux/slices/OrderSlice";
+import {
+  createOrderAsync,
+  selectCurrentOrder,
+} from "@/Redux/slices/OrderSlice";
 import { selectLoggedInUser } from "@/Redux/slices/authSlice";
 
-
-function Cart({selectedAddress,paymentMethod}) {
+function Cart({ selectedAddress, paymentMethod }) {
   const [open, setOpen] = useState(true);
   const items = useSelector(selectItems);
-  const user = useSelector(selectLoggedInUser)
+  const user = useSelector(selectLoggedInUser);
+  const userOrders = useSelector(selectCurrentOrder);
   const pathname = usePathname();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -52,12 +55,17 @@ function Cart({selectedAddress,paymentMethod}) {
         status: "pending",
       };
       dispatch(createOrderAsync(order));
-      // router.push("/order/success")
-      dispatch(resetCartAsync(user._id))
+      dispatch(resetCartAsync(user._id));
     } else {
       alert("Please enter Address and Payment method");
     }
   };
+
+  useEffect(() => {
+    if(userOrders){
+      router.push(`/order/success/${userOrders._id}`);
+    }
+  }, [dispatch,userOrders]);
 
   return (
     <>

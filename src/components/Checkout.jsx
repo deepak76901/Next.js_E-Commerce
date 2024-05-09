@@ -10,7 +10,7 @@ import {
   fetchLoggedInUserAsync,
 } from "@/Redux/slices/userSlice";
 import { selectLoggedInUser } from "@/Redux/slices/authSlice";
-import Cart from "./Cart";
+import Cart from "@/components/Cart";
 
 export default function Checkout() {
   const {

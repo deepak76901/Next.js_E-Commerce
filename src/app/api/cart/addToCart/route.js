@@ -8,17 +8,9 @@ export async function POST(request) {
     const { user, product, quantity } = await request.json();
     const newItem = new Cart({ user, product, quantity });
     const data = await newItem.save();
-
+   
     if (data) {
-      return Response.json(
-        {
-          success: true,
-          message: "Item added successfully",
-        },
-        {
-          status: 200,
-        }
-      );
+      return Response.json(data);
     }
   } catch (error) {
     return Response.json(

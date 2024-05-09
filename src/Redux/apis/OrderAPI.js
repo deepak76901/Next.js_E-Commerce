@@ -27,7 +27,7 @@ export const fetchAllOrders = async ({sort, pagination}) => {
     queryString += `${key}=${pagination[key]}&`;
   }
   console.log("Query String",queryString)
-  const response = await fetch("/orders/fetchAll?" + queryString);
+  const response = await fetch("/api/order/fetchAll?" + queryString);
   const data = await response.json();
   const totalOrders = response.headers.get("X-Total-Count");
   return { orders: data, totalOrders: +totalOrders };

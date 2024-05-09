@@ -1,5 +1,5 @@
 export const fetchLoggedInUserOrders = async (userId) => {
-  const response = await fetch("/user/orders/" + userId);
+  const response = await fetch("/api/user/orders/" + userId);
   const data = await response.json();
   console.log("Data", data);
   console.log("Total docs", data.length);
