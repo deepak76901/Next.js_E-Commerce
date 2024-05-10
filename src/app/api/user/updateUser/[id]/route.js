@@ -4,17 +4,12 @@ import { connectDB } from "@/utils/connectDB";
 export async function PATCH(request, { params }) {
   await connectDB();
 
-  const address = await request.json();
+  const newUser = await request.json();
+  console.log(newUser);
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      params.id,
-      {
-        $push: {
-          addresses: address,
-        },
-      },
-      { new: true }
-    );
+    const updatedUser = await User.findByIdAndUpdate(params.id, newUser, {
+      new: true,
+    });
 
     return Response.json(updatedUser);
   } catch (error) {

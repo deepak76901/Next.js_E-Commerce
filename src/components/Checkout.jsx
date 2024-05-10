@@ -36,7 +36,6 @@ export default function Checkout() {
   };
 
   const handleForm = (data) => {
-    console.log(data);
     dispatch(
       updateUserAsync({ ...user, addresses: [...user.addresses, data] })
     );
