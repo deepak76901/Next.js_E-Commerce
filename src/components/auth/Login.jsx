@@ -17,7 +17,7 @@ function Login() {
   const dispatch = useDispatch();
   const error = useSelector(selectError);
   const user = useSelector(selectLoggedInUser);
-  const [isLoading,setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -27,13 +27,13 @@ function Login() {
   } = useForm();
 
   const login = (data) => {
-    setIsLoading(true)
+    setIsLoading(true);
     dispatch(checkUserAsync({ email: data.email, password: data.password }));
   };
 
   return (
     <>
-      {user && redirect("/")}
+      {user && (user.isAdmin ? redirect("/admin") : redirect("/"))}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <Image

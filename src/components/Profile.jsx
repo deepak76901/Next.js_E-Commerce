@@ -112,7 +112,7 @@ export default function Profile() {
 
   return (
     <div className="flex justify-center">
-      <div className="mt-8 p-4 bg-gray-300 md:max-w-5xl w-full rounded-xl">
+      <div className="my-6 p-4 bg-gray-300 md:max-w-5xl w-full rounded-xl">
         <div className="flex flex-col sm:flex-row sm:justify-between">
           <div className="">
             <h2 className="text-3xl pt-3 pb-3 font-semibold bg-gray-300 pl-3">

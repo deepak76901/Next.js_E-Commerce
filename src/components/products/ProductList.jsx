@@ -26,6 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Pagination from "@/utils/Pagination";
 import { ITEMS_PER_PAGE, discountedPrice } from "@/utils/constants";
 import { Carousel } from "flowbite-react";
+import { usePathname } from "next/navigation";
 
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc", current: false },
@@ -39,7 +40,8 @@ function classNames(...classes) {
 
 export default function ProductList() {
   const dispatch = useDispatch();
-
+  const pathname = usePathname();
+  console.log("Pathanme", pathname);
   const { products } = useSelector(selectAllProducts);
   const brands = useSelector(selectBrands);
   const categories = useSelector(selectCategories);
@@ -62,7 +64,6 @@ export default function ProductList() {
       options: brands,
     },
   ];
-  
 
   const handleFilter = (e, section, option) => {
     const newFilter = { ...filter };
@@ -254,7 +255,19 @@ export default function ProductList() {
 
                 {/* Product grid */}
                 <div className="lg:col-span-3">
-                  <ProductGrid products={products} theme={theme}></ProductGrid>
+                  {pathname && pathname === "/admin" && (
+                    <Link
+                      href="/admin/product-form"
+                      className="flex items-center justify-center rounded-md border   border-transparent bg-green-700 mt-3 mx-8 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-500 w-36"
+                    >
+                      Add New Product
+                    </Link>
+                  )}
+                  <ProductGrid
+                    products={products}
+                    theme={theme}
+                    pathname={pathname}
+                  ></ProductGrid>
                 </div>
               </div>
             </section>
@@ -514,7 +527,7 @@ function DesktopFilter({ handleFilter, filters, theme }) {
   );
 }
 
-function ProductGrid({ products, theme }) {
+function ProductGrid({ products, theme, pathname }) {
   return (
     <>
       {products && (
@@ -526,80 +539,99 @@ function ProductGrid({ products, theme }) {
           <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:py-6 lg:max-w-7xl lg:px-8">
             <div className=" grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
               {products.map((product) => (
-                <Link href={`/product-detail/${product._id}`} key={product._id}>
-                  <div
-                    className={`group relative border-solid border-2 rounded-lg  p-2 ${
-                      theme === "dark" ? "border-gray-300" : "border-gray-500"
-                    } `}
+                <div>
+                  <Link
+                    href={`/product-detail/${product._id}`}
+                    key={product._id}
                   >
-                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 md:h-60">
-                      <Image
-                        src={product.thumbnail}
-                        alt={product.imageAlt}
-                        width={500}
-                        height={600}
-                        className="object-cover object-center w-full h-full"
-                      />
+                    <div
+                      className={`group relative border-solid border-2 rounded-lg  p-2 ${
+                        theme === "dark" ? "border-gray-300" : "border-gray-500"
+                      } `}
+                    >
+                      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 md:h-60">
+                        <Image
+                          src={product.thumbnail}
+                          alt={product.imageAlt}
+                          width={500}
+                          height={600}
+                          className="object-cover object-center w-full h-full"
+                        />
+                      </div>
+                      <div className="mt-4 flex justify-between">
+                        <div>
+                          <h3
+                            className={`text-sm text-gray-700 ${
+                              theme === "dark"
+                                ? "dark-theme hover:text-gray-100"
+                                : ""
+                            }`}
+                          >
+                            <div href={product.href}>
+                              <span
+                                aria-hidden="true"
+                                className="absolute inset-0"
+                              />
+                              {product.title}
+                            </div>
+                          </h3>
+                          <p
+                            className={`mt-1 text-sm text-gray-500 ${
+                              theme === "dark"
+                                ? "dark-theme hover:text-gray-100"
+                                : ""
+                            }`}
+                          >
+                            <StarIcon className="w-6 h-6 inline "></StarIcon>
+                            {product.rating}
+                          </p>
+                        </div>
+                        <div>
+                          <p
+                            className={`text-sm font-medium text-gray-900 ${
+                              theme === "dark"
+                                ? "dark-theme hover:text-gray-100"
+                                : ""
+                            } `}
+                          >
+                            ${discountedPrice(product)}
+                          </p>
+                          <p
+                            className={`text-sm font-medium text-gray-500 line-through ${
+                              theme === "dark"
+                                ? "strik  hover:text-gray-100"
+                                : ""
+                            }`}
+                          >
+                            ${product.price}
+                          </p>
+                        </div>
+                      </div>
+                      {product.deleted && (
+                        <div>
+                          <p className="text-sm text-red-400">
+                            Product Deleted{" "}
+                          </p>
+                        </div>
+                      )}
+                      {product.stock <= 0 && (
+                        <div>
+                          <p className="text-sm text-red-400">Out of Stock </p>
+                        </div>
+                      )}
                     </div>
-                    <div className="mt-4 flex justify-between">
-                      <div>
-                        <h3
-                          className={`text-sm text-gray-700 ${
-                            theme === "dark"
-                              ? "dark-theme hover:text-gray-100"
-                              : ""
-                          }`}
-                        >
-                          <div href={product.href}>
-                            <span
-                              aria-hidden="true"
-                              className="absolute inset-0"
-                            />
-                            {product.title}
-                          </div>
-                        </h3>
-                        <p
-                          className={`mt-1 text-sm text-gray-500 ${
-                            theme === "dark"
-                              ? "dark-theme hover:text-gray-100"
-                              : ""
-                          }`}
-                        >
-                          <StarIcon className="w-6 h-6 inline "></StarIcon>
-                          {product.rating}
-                        </p>
-                      </div>
-                      <div>
-                        <p
-                          className={`text-sm font-medium text-gray-900 ${
-                            theme === "dark"
-                              ? "dark-theme hover:text-gray-100"
-                              : ""
-                          } `}
-                        >
-                          ${discountedPrice(product)}
-                        </p>
-                        <p
-                          className={`text-sm font-medium text-gray-500 line-through ${
-                            theme === "dark" ? "strik  hover:text-gray-100" : ""
-                          }`}
-                        >
-                          ${product.price}
-                        </p>
-                      </div>
+                  </Link>
+                  {pathname && pathname === "/admin" && (
+                    <div>
+                      <Link
+                        href={`/admin/product-form/edit/${product.id}`}
+                        className="flex items-center justify-center rounded-md border   border-transparent bg-indigo-600 mt-3 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
+                      >
+                        Edit Product
+                      </Link>
                     </div>
-                    {product.deleted && (
-                      <div>
-                        <p className="text-sm text-red-400">Product Deleted </p>
-                      </div>
-                    )}
-                    {product.stock <= 0 && (
-                      <div>
-                        <p className="text-sm text-red-400">Out of Stock </p>
-                      </div>
-                    )}
-                  </div>
-                </Link>
+                  )}
+                </div>
               ))}
             </div>
           </div>
