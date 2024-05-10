@@ -159,6 +159,6 @@ export const selectProductById = (state) => state.product.selectedProduct;
 export const selectCreatedProduct = (state) => state.product.createdProduct;
 export const selectSuggestions = (state) => state.product.suggestions;
 
-export const selectTotalItems = (state) => state.product.totalItems;
+export const selectTotalItems = (state) => state.product.products.totalItems;
 
 export default productSlice.reducer;

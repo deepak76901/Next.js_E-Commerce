@@ -5,7 +5,7 @@ export async function GET(request) {
   await connectDB();
   const { searchParams } = new URL(request.url);
   let page = searchParams.get("page") || 1;
-  let limit = searchParams.get("limit") || 9;
+  let limit = searchParams.get("limit") || 10;
   let sortBy = searchParams.get("sort");
   let category = searchParams.get("category");
   let brand = searchParams.get("brand");
@@ -21,11 +21,11 @@ export async function GET(request) {
   try {
     const products = await Product.find(query)
       .limit(limit)
-      .skip(page - 1)
+      .skip((page - 1) * limit)
       .sort(sortBy);
-    const totalItems = products.length;
+    const totalItems = await Product.find({}).countDocuments();
 
-    return Response.json({products,totalItems});
+    return Response.json({ products, totalItems });
   } catch (error) {
     return Response.json({
       success: false,

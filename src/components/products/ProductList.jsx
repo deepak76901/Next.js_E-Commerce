@@ -85,7 +85,7 @@ export default function ProductList() {
   };
 
   const handleSort = (e, option) => {
-    const sort = { _sort: option.sort, _order: option.order };
+    const sort = { sort: option.sort, order: option.order };
     setSort(sort);
     console.log({ sort });
   };
@@ -95,7 +95,7 @@ export default function ProductList() {
   };
 
   useEffect(() => {
-    const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
+    const pagination = { page: page, limit: ITEMS_PER_PAGE };
     dispatch(fetchProductsByFilterAsync({ filter, sort, pagination }));
   }, [dispatch, filter, sort, page]);
 
