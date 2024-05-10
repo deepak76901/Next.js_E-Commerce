@@ -55,7 +55,6 @@ function Cart({ selectedAddress, paymentMethod }) {
         status: "pending",
       };
       dispatch(createOrderAsync(order));
-      dispatch(resetCartAsync(user._id));
     } else {
       alert("Please enter Address and Payment method");
     }

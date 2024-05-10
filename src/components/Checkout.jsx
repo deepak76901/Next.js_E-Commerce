@@ -6,11 +6,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import {
   updateUserAsync,
-  selectUserInfo,
-  fetchLoggedInUserAsync,
 } from "@/Redux/slices/userSlice";
-import { selectLoggedInUser } from "@/Redux/slices/authSlice";
 import Cart from "@/components/Cart";
+import { selectLoggedInUser } from "@/Redux/slices/authSlice";
 
 export default function Checkout() {
   const {
@@ -23,8 +21,8 @@ export default function Checkout() {
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("cash");
-  const { _id } = useSelector(selectLoggedInUser);
-  const user = useSelector(selectUserInfo);
+  const user = useSelector(selectLoggedInUser)
+ 
   if (user) {
     console.log(user);
   }
@@ -45,9 +43,7 @@ export default function Checkout() {
     reset();
   };
 
-  useEffect(() => {
-    dispatch(fetchLoggedInUserAsync(_id));
-  }, [dispatch, _id]);
+
 
   return (
     <>

@@ -16,8 +16,10 @@ export default function UserOrders() {
   const user = useSelector(selectUserInfo);
   const orders = useSelector(selectUserOrders);
   useEffect(() => {
-    dispatch(fetchLoggedInUserOrdersAsync(user._id));
-  }, [dispatch]);
+    if(user){
+      dispatch(fetchLoggedInUserOrdersAsync(user._id));
+    }
+  }, [dispatch,user]);
   return (
     <>
       {orders.length === 0 && (
@@ -48,6 +50,8 @@ export default function UserOrders() {
                       <Image
                         src={item.product.thumbnail}
                         alt={item.product.title}
+                        width={300}
+                        height={300}
                         className="h-full w-full object-cover object-center"
                       />
                     </div>

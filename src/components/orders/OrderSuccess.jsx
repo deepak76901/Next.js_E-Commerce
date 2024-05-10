@@ -15,7 +15,7 @@ export default function OrderSuccess() {
   useEffect(() => {
       dispatch(resetCartAsync(user._id));
       dispatch(resetOrder());
-  }, [user]);
+  }, [dispatch,user]);
 
   return (
     <>

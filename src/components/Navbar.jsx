@@ -14,6 +14,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectLoggedInUser } from "@/Redux/slices/authSlice";
 import { BsSearch } from "react-icons/bs";
 import Image from "next/image";
+import {
+  selectUserInfo,
+  fetchLoggedInUserAsync,
+} from "@/Redux/slices/userSlice";
 
 const navigation = [
   { name: "Products", link: "/", isAdmin: false },
@@ -30,11 +34,15 @@ function Navbar({ children }) {
   const user = useSelector(selectLoggedInUser);
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+  const userInfo = useSelector(selectUserInfo);
 
   useEffect(() => {
-    dispatch(fetchItemsByUserIdAsync(user._id))
-  },[dispatch,user._id])
+    dispatch(fetchItemsByUserIdAsync(user._id));
+    dispatch(fetchLoggedInUserAsync(user._id));
+  }, [dispatch, user._id]);
+
   return (
     <Disclosure as="nav" className="bg-gray-200 sticky top-0 z-30">
       {({ open }) => (
@@ -177,7 +185,7 @@ function Navbar({ children }) {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            href="/orders"
+                            href="/order/my-orders"
                             className={classNames(
                               active ? "bg-gray-200" : "",
                               "block px-4 py-2 text-sm text-gray-700"
