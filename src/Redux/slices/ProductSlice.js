@@ -22,8 +22,6 @@ const initialState = {
   suggestions: [],
 };
 
-
-
 export const fetchProductByIdAsync = createAsyncThunk(
   "product/fetchProductById",
   async (id) => {
@@ -88,6 +86,7 @@ export const productSlice = createSlice({
     },
     resetProductForm: (state) => {
       state.selectedProduct = null;
+      state.createdProduct = null;
     },
   },
 
@@ -138,7 +137,7 @@ export const productSlice = createSlice({
       })
       .addCase(updateProductAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.products.push(action.payload);
+        state.selectedProduct = action.payload;
       })
       .addCase(fetchSuggestionAsync.pending, (state) => {
         state.status = "loading";

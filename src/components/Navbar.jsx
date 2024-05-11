@@ -21,7 +21,7 @@ import {
 
 const navigation = [
   { name: "Products", link: "/", isAdmin: false },
-  { name: "Admin's List", link: "/admin", isAdmin: true },
+  { name: "Products", link: "/admin", isAdmin: true },
   { name: "Orders", link: "/admin/orders", isAdmin: true },
 ];
 

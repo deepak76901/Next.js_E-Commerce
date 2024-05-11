@@ -13,6 +13,7 @@ import {
   selectCategories,
   fetchBrandsAsync,
   fetchCategoryAsync,
+  resetProductForm,
 } from "@/Redux/slices/ProductSlice";
 import {
   ChevronDownIcon,
@@ -41,7 +42,6 @@ function classNames(...classes) {
 export default function ProductList() {
   const dispatch = useDispatch();
   const pathname = usePathname();
-  console.log("Pathanme", pathname);
   const { products } = useSelector(selectAllProducts);
   const brands = useSelector(selectBrands);
   const categories = useSelector(selectCategories);
@@ -107,6 +107,7 @@ export default function ProductList() {
   useEffect(() => {
     dispatch(fetchBrandsAsync());
     dispatch(fetchCategoryAsync());
+    dispatch(resetProductForm())
   }, [dispatch]);
 
   const { theme } = useSelector((state) => state.theme);
@@ -549,7 +550,7 @@ function ProductGrid({ products, theme, pathname }) {
                         theme === "dark" ? "border-gray-300" : "border-gray-500"
                       } `}
                     >
-                      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 md:h-60">
+                      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md lg:aspect-none group-hover:opacity-75 md:h-60 h-48">
                         <Image
                           src={product.thumbnail}
                           alt={product.imageAlt}
@@ -624,7 +625,7 @@ function ProductGrid({ products, theme, pathname }) {
                   {pathname && pathname === "/admin" && (
                     <div>
                       <Link
-                        href={`/admin/product-form/edit/${product.id}`}
+                        href={`/admin/product-form/edit/${product._id}`}
                         className="flex items-center justify-center rounded-md border   border-transparent bg-indigo-600 mt-3 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
                       >
                         Edit Product
