@@ -25,7 +25,7 @@ function Cart({ selectedAddress, paymentMethod }) {
   const [open, setOpen] = useState(true);
   const items = useSelector(selectItems);
   const user = useSelector(selectLoggedInUser);
-  const userOrders = useSelector(selectCurrentOrder);
+  const currentOrder = useSelector(selectCurrentOrder);
   const pathname = usePathname();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -60,14 +60,15 @@ function Cart({ selectedAddress, paymentMethod }) {
     }
   };
 
-  useEffect(() => {
-    if(userOrders){
-      router.push(`/order/success/${userOrders._id}`);
-    }
-  }, [dispatch,userOrders]);
-
   return (
     <>
+      {currentOrder &&
+        currentOrder === "cash" &&
+        router.push(`/order/success/${userOrders._id}`)}
+      {currentOrder &&
+        currentOrder === "card" &&
+        router.push(`/payment/${userOrders._id}`)}
+
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="mt-6 p-4 bg-white ">
           <h2 className="text-3xl pt-3 pb-5 pl-7 font-semibold bg-white">

@@ -26,8 +26,11 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import Pagination from "@/utils/Pagination";
 import { ITEMS_PER_PAGE, discountedPrice } from "@/utils/constants";
-import { Carousel } from "flowbite-react";
+import { Carousel, ModalBody, ModalFooter, ModalHeader } from "flowbite-react";
 import { usePathname } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
+import { Button, Modal } from "flowbite-react";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc", current: false },
@@ -107,7 +110,7 @@ export default function ProductList() {
   useEffect(() => {
     dispatch(fetchBrandsAsync());
     dispatch(fetchCategoryAsync());
-    dispatch(resetProductForm())
+    dispatch(resetProductForm());
   }, [dispatch]);
 
   const { theme } = useSelector((state) => state.theme);
@@ -529,6 +532,17 @@ function DesktopFilter({ handleFilter, filters, theme }) {
 }
 
 function ProductGrid({ products, theme, pathname }) {
+  const handleDelete = async (productId) => {
+    const response = await fetch(`/api/products/deleteProduct/${productId}`, {
+      method: "DELETE",
+    });
+
+    const notify = () => toast.success("Product Deleted Successfully");
+
+    if (response.ok) {
+      notify();
+    }
+  };
   return (
     <>
       {products && (
@@ -611,7 +625,7 @@ function ProductGrid({ products, theme, pathname }) {
                       {product.deleted && (
                         <div>
                           <p className="text-sm text-red-400">
-                            Product Deleted{" "}
+                            Product Deleted
                           </p>
                         </div>
                       )}
@@ -623,13 +637,23 @@ function ProductGrid({ products, theme, pathname }) {
                     </div>
                   </Link>
                   {pathname && pathname === "/admin" && (
-                    <div>
+                    <div className="flex flex-col sm:flex-row w-full sm:justify-between">
                       <Link
                         href={`/admin/product-form/edit/${product._id}`}
-                        className="flex items-center justify-center rounded-md border   border-transparent bg-indigo-600 mt-3 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
+                        className="text-center rounded-md border w-full sm:w-28  border-transparent bg-indigo-600 mt-1 sm:mt-3 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
                       >
-                        Edit Product
+                        Edit
                       </Link>
+                      <button
+                        onClick={() => {
+                          handleDelete(product._id);
+                        }}
+                        className="text-center rounded-md border w-full sm:w-28  border-transparent bg-red-700 mt-1 sm:mt-3 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-900"
+                      >
+                        Delete
+                      </button>
+
+                      <Toaster />
                     </div>
                   )}
                 </div>
