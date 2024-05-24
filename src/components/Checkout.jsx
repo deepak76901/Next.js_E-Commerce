@@ -9,6 +9,7 @@ import {
 } from "@/Redux/slices/userSlice";
 import Cart from "@/components/Cart";
 import { selectLoggedInUser } from "@/Redux/slices/authSlice";
+import Image from "next/image";
 
 export default function Checkout() {
   const {
@@ -236,10 +237,12 @@ export default function Checkout() {
                                 value={index}
                                 className="h-4 w-4 mx-5 border-gray-400 text-indigo-600 focus:ring-indigo-600"
                               />
-                              <img
+                              <Image
                                 className="h-12 w-12 flex-none rounded-full bg-gray-50 object-cover"
                                 src="https://e7.pngegg.com/pngimages/442/17/png-clipart-computer-icons-user-profile-male-user-heroes-head.png"
                                 alt="DP"
+                                width={300}
+                                height={300}
                               />
                               <div className="min-w-0 flex-auto">
                                 <p className="text-sm font-semibold leading-6 text-gray-900">

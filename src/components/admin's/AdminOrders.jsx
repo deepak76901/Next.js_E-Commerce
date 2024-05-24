@@ -50,7 +50,7 @@ export default function AdminOrders() {
   useEffect(() => {
     const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
     dispatch(fetchAllOrdersAsync({ sort, pagination }));
-  }, [sort, page]);
+  }, [dispatch, sort, page]);
 
   const chooseColor = (status) => {
     switch (status) {
@@ -148,6 +148,7 @@ export default function AdminOrders() {
                               src={item.product.thumbnail}
                               width={250}
                               height={250}
+                              alt={item.product.title}
                             />
                           </div>
                           <span className="font-semibold">

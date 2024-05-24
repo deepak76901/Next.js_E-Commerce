@@ -108,7 +108,7 @@ export default function Profile() {
       console.log("Image url", imageUrl);
       dispatch(saveImageAsync({ downloadURL: imageUrl, userId: user.id }));
     }
-  }, [imageUrl]);
+  }, [dispatch,imageUrl,user.id]);
 
   return (
     <div className="flex justify-center">

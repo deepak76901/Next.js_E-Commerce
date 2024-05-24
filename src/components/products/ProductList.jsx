@@ -554,11 +554,8 @@ function ProductGrid({ products, theme, pathname }) {
           <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:py-6 lg:max-w-7xl lg:px-8">
             <div className=" grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
               {products.map((product) => (
-                <div>
-                  <Link
-                    href={`/product-detail/${product._id}`}
-                    key={product._id}
-                  >
+                <div key={product._id}>
+                  <Link href={`/product-detail/${product._id}`}>
                     <div
                       className={`group relative border-solid border-2 rounded-lg  p-2 ${
                         theme === "dark" ? "border-gray-300" : "border-gray-500"
@@ -648,7 +645,7 @@ function ProductGrid({ products, theme, pathname }) {
                         onClick={() => {
                           handleDelete(product._id);
                         }}
-                        className="text-center rounded-md border w-full sm:w-28  border-transparent bg-red-700 mt-1 sm:mt-3 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-900"
+                        className="text-center rounded-md border w-full sm:w-28  border-transparent bg-red-500 mt-1 sm:mt-3 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-600"
                       >
                         Delete
                       </button>

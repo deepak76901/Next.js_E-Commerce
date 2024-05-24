@@ -10,7 +10,7 @@ import { addToCartAsync, selectItems } from "@/Redux/slices/CartSlice";
 import { discountedPrice } from "@/utils/constants";
 import { selectLoggedInUser } from "@/Redux/slices/authSlice";
 import { selectUserInfo } from "@/Redux/slices/userSlice";
-// import Suggestions from "./Suggestions";
+import Suggestions from "./Suggestions";
 import { ChevronRight, ChevronLeft, Star, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
@@ -167,7 +167,7 @@ export default function ProductDetails() {
               </div>
             </div>
           </div>
-          <div>{/* <Suggestions category={product.category} /> */}</div>
+          <div><Suggestions category={product.category} /></div>
         </div>
       )}
     </div>

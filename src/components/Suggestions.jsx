@@ -1,15 +1,9 @@
-"use client";
-
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchSuggestionAsync,
-  selectSuggestions,
-} from "@/Redux/slices/ProductSlice";
+import { fetchSuggestionAsync, selectSuggestions } from "@/Redux/slices/ProductSlice";
 import { discountedPrice } from "@/utils/constants";
 import { StarIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
-import Image from "next/image";
 
 export default function Suggestions({ category }) {
   const dispatch = useDispatch();
@@ -22,17 +16,12 @@ export default function Suggestions({ category }) {
     <div className="flex pb-5 gap-4 md:justify-around px-10  overflow-x-auto">
       {data.length > 0 &&
         data.map((product) => (
-          <div
-            className="border-2 border-gray-600 h-60 w-52  group"
-            key={product._id}
-          >
-            <div className="h-40 w-40" >
-              <Link href={`/product-detail/${product.id}`} >
-                <Image
+          <div className="border-2 border-gray-600 h-60 w-52  group">
+            <div className="h-40 w-40">
+              <Link href={`/product-detail/${product.id}`}>
+                <img
                   src={product.thumbnail}
                   className="h-40 w-full object-cover group-hover:cursor-pointer mx-auto"
-                  width={500}
-                  height={500}
                 />
               </Link>
             </div>

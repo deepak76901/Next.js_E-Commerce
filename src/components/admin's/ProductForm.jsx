@@ -23,7 +23,7 @@ export default function ProductForm() {
   const brands = useSelector(selectBrands);
   const categories = useSelector(selectCategories);
   const params = useParams();
-  const router = useRouter()
+  const router = useRouter();
 
   const selectedProduct = useSelector(selectProductById);
   const createdProduct = useSelector(selectCreatedProduct);
@@ -56,7 +56,7 @@ export default function ProductForm() {
       setValue("image2", selectedProduct.images[1]);
       setValue("image3", selectedProduct.images[2]);
     }
-  }, [selectedProduct]);
+  }, [dispatch, setValue, selectedProduct]);
 
   const handleForm = (data) => {
     const product = { ...data };
