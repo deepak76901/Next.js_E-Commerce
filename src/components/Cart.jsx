@@ -63,11 +63,11 @@ function Cart({ selectedAddress, paymentMethod }) {
   return (
     <>
       {currentOrder &&
-        currentOrder === "cash" &&
+        currentOrder.paymentMethod === "cash" &&
         router.push(`/order/success/${userOrders._id}`)}
       {currentOrder &&
-        currentOrder === "card" &&
-        router.push(`/payment/${userOrders._id}`)}
+        currentOrder.paymentMethod === "card" &&
+        router.push(`/stripe-checkout`)}
 
       {items && (
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">

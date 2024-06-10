@@ -24,8 +24,9 @@ export default function ProductDetails() {
   const items = useSelector(selectItems);
   const dispatch = useDispatch();
   const params = useParams();
-  // Remember this destructuring process
   const { _id } = useSelector(selectLoggedInUser);
+  const [index, setIndex] = useState(0);
+
   const handleCart = (e) => {
     e.preventDefault();
 
@@ -53,8 +54,7 @@ export default function ProductDetails() {
   useEffect(() => {
     dispatch(fetchProductByIdAsync(params.id));
   }, [ dispatch,params.id]);
-
-  const [index, setIndex] = useState(0);
+ 
 
   return (
     <div className="bg-white">
@@ -122,6 +122,11 @@ export default function ProductDetails() {
 
                   <Star size={17} strokeWidth={3} className="ml-1" />
                 </div>
+              </div>
+
+              <div className="italic font-medium px-5 pt-2">
+                Category : {product.category}<br/>
+                Brand    : {product.brand}
               </div>
 
               {/**Details */}

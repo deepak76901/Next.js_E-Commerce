@@ -557,14 +557,12 @@ function ProductGrid({ products, theme, pathname }) {
                 <div key={product._id}>
                   <Link href={`/product-detail/${product._id}`}>
                     <div
-                      className={`group relative border-solid border-2 rounded-lg  p-2 ${
-                        theme === "dark" ? "border-gray-300" : "border-gray-500"
-                      } `}
+                      className={`group relative border-solid border-2 rounded-lg  p-2 lg:h-[22rem]`}
                     >
                       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md lg:aspect-none group-hover:opacity-75 md:h-60 h-48">
                         <Image
                           src={product.thumbnail}
-                          alt={product.imageAlt}
+                          alt={product.imageAlt || product.title}
                           width={500}
                           height={600}
                           className="object-cover object-center w-full h-full"
@@ -634,7 +632,7 @@ function ProductGrid({ products, theme, pathname }) {
                     </div>
                   </Link>
                   {pathname && pathname === "/admin" && (
-                    <div className="flex flex-col sm:flex-row w-full sm:justify-between">
+                    <div className="flex flex-col sm:flex-row w-full sm:justify-between gap-2">
                       <Link
                         href={`/admin/product-form/edit/${product._id}`}
                         className="text-center rounded-md border w-full sm:w-28  border-transparent bg-indigo-600 mt-1 sm:mt-3 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"

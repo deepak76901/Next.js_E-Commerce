@@ -27,12 +27,13 @@ export default function Suggestions({ category }) {
             key={product._id}
           >
             <div className="h-40 w-40" >
-              <Link href={`/product-detail/${product.id}`} >
+              <Link href={`/product-detail/${product._id}`} >
                 <Image
                   src={product.thumbnail}
                   className="h-40 w-full object-cover group-hover:cursor-pointer mx-auto"
                   width={500}
                   height={500}
+                  alt={product.title}
                 />
               </Link>
             </div>
