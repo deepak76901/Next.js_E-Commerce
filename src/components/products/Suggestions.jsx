@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import {
   fetchSuggestionAsync,
   selectSuggestions,
 } from "@/Redux/slices/ProductSlice";
 import { discountedPrice } from "@/utils/constants";
 import { StarIcon } from "@heroicons/react/20/solid";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Suggestions({ category }) {
   const dispatch = useDispatch();
@@ -23,16 +23,16 @@ export default function Suggestions({ category }) {
       {data.length > 0 &&
         data.map((product) => (
           <div
-            className="border-2 border-gray-600 h-60 w-52  group"
+            className="border-2 border-gray-600 h-60 min-w-40 md:w-52  group"
             key={product._id}
           >
-            <div className="h-40 w-40" >
+            <div className="h-40 w-full mx-auto" >
               <Link href={`/product-detail/${product._id}`} >
                 <Image
                   src={product.thumbnail}
-                  className="h-40 w-full object-cover group-hover:cursor-pointer mx-auto"
-                  width={500}
-                  height={500}
+                  className="h-40 object-cover group-hover:cursor-pointer "
+                  width={600}
+                  height={600}
                   alt={product.title}
                 />
               </Link>

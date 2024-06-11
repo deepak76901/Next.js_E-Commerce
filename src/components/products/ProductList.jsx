@@ -1,36 +1,32 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { Fragment } from "react";
-import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
-import { XMarkIcon, StarIcon } from "@heroicons/react/24/outline";
 import {
-  selectAllProducts,
-  selectTotalItems,
-  fetchProductsByFilterAsync,
-  selectBrands,
-  selectCategories,
   fetchBrandsAsync,
   fetchCategoryAsync,
+  fetchProductsByFilterAsync,
   resetProductForm,
+  selectAllProducts,
+  selectBrands,
+  selectCategories,
+  selectTotalItems,
 } from "@/Redux/slices/ProductSlice";
+import Pagination from "@/utils/Pagination";
+import { ITEMS_PER_PAGE, discountedPrice } from "@/utils/constants";
+import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   ChevronDownIcon,
   FunnelIcon,
   MinusIcon,
-  PlusIcon,
-  Squares2X2Icon,
+  PlusIcon
 } from "@heroicons/react/20/solid";
+import { StarIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Carousel } from "flowbite-react";
+import Image from "next/image";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import Pagination from "@/utils/Pagination";
-import { ITEMS_PER_PAGE, discountedPrice } from "@/utils/constants";
-import { Carousel, ModalBody, ModalFooter, ModalHeader } from "flowbite-react";
 import { usePathname } from "next/navigation";
+import { Fragment, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { Button, Modal } from "flowbite-react";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { useDispatch, useSelector } from "react-redux";
 
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc", current: false },
@@ -532,6 +528,7 @@ function DesktopFilter({ handleFilter, filters, theme }) {
 }
 
 function ProductGrid({ products, theme, pathname }) {
+  const [isLarge, setIsLarge] = useState(window.innerWidth > 450);
   const handleDelete = async (productId) => {
     const response = await fetch(`/api/products/deleteProduct/${productId}`, {
       method: "DELETE",
@@ -543,21 +540,29 @@ function ProductGrid({ products, theme, pathname }) {
       notify();
     }
   };
+
+  const handleResize = () => {
+    setIsLarge(window.innerWidth > 450);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <>
       {products && (
-        <div
-          className={`${
-            theme === "dark" ? "text-white bg-gray-800" : "bg-white"
-          } `}
-        >
+        <div>
           <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:py-6 lg:max-w-7xl lg:px-8">
             <div className=" grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
               {products.map((product) => (
                 <div key={product._id}>
                   <Link href={`/product-detail/${product._id}`}>
                     <div
-                      className={`group relative border-solid border-2 rounded-lg  p-2 lg:h-[22rem]`}
+                      className={`group relative border-solid border-2 rounded-lg  p-2 md:h-[22rem]`}
                     >
                       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md lg:aspect-none group-hover:opacity-75 md:h-60 h-48">
                         <Image
@@ -565,13 +570,15 @@ function ProductGrid({ products, theme, pathname }) {
                           alt={product.imageAlt || product.title}
                           width={500}
                           height={600}
-                          className="object-cover object-center w-full h-full"
+                          className={`object-center ${
+                            isLarge ? "object-contain" : "object-cover"
+                          } w-full h-full md:object-cover`}
                         />
                       </div>
                       <div className="mt-4 flex justify-between">
                         <div>
                           <h3
-                            className={`text-sm text-gray-700 ${
+                            className={`text-sm text-gray-700 sm:line-clamp-1 md:line-clamp-2 ${
                               theme === "dark"
                                 ? "dark-theme hover:text-gray-100"
                                 : ""

@@ -1,19 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { selectLoggedInUser } from "@/Redux/slices/authSlice";
+import { addToCartAsync, selectItems } from "@/Redux/slices/CartSlice";
 import {
   fetchProductByIdAsync,
   selectProductById,
 } from "@/Redux/slices/ProductSlice";
-import { addToCartAsync, selectItems } from "@/Redux/slices/CartSlice";
 import { discountedPrice } from "@/utils/constants";
-import { selectLoggedInUser } from "@/Redux/slices/authSlice";
-import { selectUserInfo } from "@/Redux/slices/userSlice";
-import Suggestions from "./Suggestions";
-import { ChevronRight, ChevronLeft, Star, Loader2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Loader2, Star } from "lucide-react";
 import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Suggestions from "./Suggestions";
+import Carousel from "../Carousel";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -68,31 +68,7 @@ export default function ProductDetails() {
           <div className="pt-4  flex flex-col md:flex-row w-full">
             {/* Image gallery */}
             <div className=" mt-4 md:w-[350px] md:h-[450px] mx-10">
-              <div className="relative">
-                <button
-                  className="absolute top-2/4 left-0 bg-gray-200/70 py-1 px-1 text-xl"
-                  onClick={() => {
-                    index > 0 && setIndex(index - 1);
-                  }}
-                >
-                  <ChevronLeft />
-                </button>
-                <button
-                  className="absolute top-2/4 right-0 bg-gray-200/70 py-1 px-1 text-xl"
-                  onClick={() => {
-                    index < 3 && setIndex(index + 1);
-                  }}
-                >
-                  <ChevronRight />
-                </button>
-                <Image
-                  src={product.images[index]}
-                  alt={product.title}
-                  width={1000}
-                  height={1000}
-                  className="h-[400px] w-full object-contain object-center"
-                />
-              </div>
+              <Carousel images={product.images} />
               <form className="mt-3">
                 <button
                   type="submit"
